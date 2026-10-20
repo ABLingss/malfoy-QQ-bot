@@ -1,0 +1,36 @@
+[Unit]
+Description=Koishi QQ bot (OneBot + ChatLuna + DeepSeek)
+Documentation=file://__PROJECT_ROOT__/README.md
+After=network-online.target
+Wants=network-online.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+User=__USER__
+Group=__USER__
+WorkingDirectory=__PROJECT_ROOT__/koishi
+EnvironmentFile=__PROJECT_ROOT__/.env
+Environment=NODE_ENV=production
+Environment=PATH=__NODE_DIR__:/usr/local/bin:/usr/bin:/bin
+ExecStart=__NODE_BIN__ __PROJECT_ROOT__/koishi/node_modules/koishi/bin.js start
+Restart=always
+RestartSec=5
+TimeoutStopSec=20
+KillMode=control-group
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=koishi
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true
+UMask=0077
+LimitNOFILE=65535
+
+[Install]
+WantedBy=multi-user.target

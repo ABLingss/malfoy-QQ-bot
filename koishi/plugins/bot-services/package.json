@@ -1,0 +1,10 @@
+{
+  "name": "koishi-plugin-bot-services",
+  "version": "1.0.0",
+  "description": "Search, weather, persona intro and group whitelist for the QQ bot",
+  "main": "index.js",
+  "license": "MIT",
+  "peerDependencies": {
+    "koishi": "^4.18.0"
+  }
+}

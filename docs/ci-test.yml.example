@@ -1,0 +1,26 @@
+# Copy this file to .github/workflows/test.yml after granting the GitHub token
+# the `workflow` scope. It is kept as .example because the default gh OAuth
+# token may not have permission to create workflow files.
+
+name: test
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: koishi/package-lock.json
+      - name: Install dependencies
+        run: npm ci --prefix koishi --ignore-scripts
+      - name: Test research modules
+        run: node --test tests/research.test.js
+      - name: Shell syntax
+        run: for f in scripts/*.sh; do bash -n "$f"; done

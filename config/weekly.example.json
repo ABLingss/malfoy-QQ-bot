@@ -1,0 +1,48 @@
+{
+  "enabled": true,
+  "dayOfWeek": 7,
+  "time": "09:00",
+  "timezone": "Asia/Shanghai",
+  "target": {
+    "type": "private",
+    "userId": "YOUR_QQ_ID"
+  },
+  "runOnStartup": false,
+  "catchupMinutes": 120,
+  "chunkSize": 3,
+  "delivery": {
+    "briefInChat": true,
+    "saveMarkdown": true,
+    "sendMarkdownFile": true
+  },
+  "remindersFile": "../data/reminders.json",
+  "weather": {
+    "enabled": true,
+    "city": "成都",
+    "latitude": 30.5728,
+    "longitude": 104.0668,
+    "timezone": "Asia/Shanghai",
+    "forecastDays": 7,
+    "dailyDays": 3
+  },
+  "arxiv": {
+    "enabled": true,
+    "days": 7,
+    "maxPapers": 8,
+    "maxKeywords": 8,
+    "liveFallback": false
+  },
+  "ccf": {
+    "enabled": true,
+    "lookaheadDays": 60,
+    "maxItems": 8
+  },
+  "reminders": {
+    "enabled": true,
+    "maxItems": 10
+  },
+  "system": {
+    "enabled": true
+  },
+  "maxWeeklyAttempts": 3
+}

@@ -1,0 +1,301 @@
+{
+  "version": "example-1",
+  "timezone": "Asia/Shanghai",
+  "owner": {
+    "affiliation": "Your University",
+    "role": "Researcher",
+    "longTermGoal": "你的长期研究目标"
+  },
+  "researchDirections": [
+    {
+      "id": "music",
+      "label": "音乐生成、音乐 SSL 与歌声转换",
+      "weight": 0.4,
+      "priority": 1,
+      "arxivCategories": [
+        "eess.AS",
+        "cs.SD",
+        "cs.MM"
+      ],
+      "keywords": [
+        "music generation",
+        "text-to-music",
+        "music language model",
+        "symbolic music",
+        "music understanding",
+        "music self-supervised",
+        "music ssl",
+        "self-supervised audio",
+        "singing voice conversion",
+        "svc",
+        "voice conversion",
+        "xvc",
+        "neural codec",
+        "rvq",
+        "audio codec",
+        "streaming audio",
+        "vocoder",
+        "music information retrieval",
+        "beat tracking",
+        "chord recognition",
+        "real-time audio"
+      ],
+      "projects": [
+        {
+          "name": "音乐生成与音乐表征",
+          "questions": [
+            "流式推理、实时性和听感如何权衡？",
+            "自监督音频表征如何保持全曲结构？",
+            "轻量歌声转换如何兼顾音色与泛化？"
+          ]
+        }
+      ],
+      "knownWorks": []
+    },
+    {
+      "id": "mlsys",
+      "label": "机器学习系统与编译器",
+      "weight": 0.28,
+      "priority": 2,
+      "arxivCategories": [
+        "cs.DC",
+        "cs.PL",
+        "cs.AR",
+        "cs.SE",
+        "cs.LG"
+      ],
+      "keywords": [
+        "machine learning systems",
+        "ml systems",
+        "compiler",
+        "compilation",
+        "kernel",
+        "gpu",
+        "inference",
+        "serving",
+        "throughput",
+        "latency",
+        "distributed training",
+        "data parallel",
+        "pipeline parallel",
+        "tensor parallel",
+        "gradient checkpointing",
+        "scheduling",
+        "runtime",
+        "heterogeneous",
+        "serverless",
+        "webassembly",
+        "wasm",
+        "triton",
+        "cuda",
+        "roofline",
+        "operator fusion",
+        "graph optimization",
+        "speculative decoding",
+        "kv cache"
+      ],
+      "projects": [
+        {
+          "name": "训练与推理系统效率",
+          "questions": [
+            "是否提出新的系统机制，而不只是更大模型或更多 GPU？",
+            "瓶颈与端到端收益是否可量化、可复现？"
+          ]
+        }
+      ],
+      "knownWorks": []
+    },
+    {
+      "id": "rl",
+      "label": "强化学习训练敏感性与 GRPO",
+      "weight": 0.19,
+      "priority": 3,
+      "arxivCategories": [
+        "cs.LG",
+        "cs.CL",
+        "cs.AI"
+      ],
+      "keywords": [
+        "grpo",
+        "group relative policy optimization",
+        "prompt order",
+        "data order",
+        "training stability",
+        "variance reduction",
+        "reinforcement learning",
+        "policy optimization",
+        "verifiable reward",
+        "rlhf",
+        "reward model",
+        "rollout",
+        "seed sensitivity",
+        "reproducibility",
+        "symmetric rollout averaging"
+      ],
+      "projects": [
+        {
+          "name": "强化学习训练稳定性",
+          "questions": [
+            "训练端点差异如何归因到数据顺序、种子和其他因素？",
+            "降低方差是否真的改善最终任务性能？"
+          ]
+        }
+      ],
+      "knownWorks": []
+    },
+    {
+      "id": "multimodal",
+      "label": "高效多模态、视频理解与 ViT",
+      "weight": 0.13,
+      "priority": 4,
+      "arxivCategories": [
+        "cs.CV",
+        "cs.MM",
+        "cs.CL"
+      ],
+      "keywords": [
+        "video understanding",
+        "long video",
+        "video question answering",
+        "visual token",
+        "frame selection",
+        "keyframe",
+        "sparse visual",
+        "efficient multimodal",
+        "vision-language",
+        "visual evidence",
+        "confidence calibration",
+        "adaptive computation",
+        "early exit",
+        "visual reasoning",
+        "vit",
+        "vision transformer",
+        "patch embedding",
+        "visual encoder",
+        "video transformer",
+        "token pruning"
+      ],
+      "projects": [
+        {
+          "name": "高效多模态与视频理解",
+          "questions": [
+            "如何用更少视觉 token 达到相近准确率？",
+            "置信度校准能否跨数据集迁移？",
+            "ViT 表征如何用于稀疏帧选择或证据定位？"
+          ]
+        },
+        {
+          "name": "ViT 表征与高效视觉推理",
+          "questions": [
+            "ViT 的 patch/token 表征能否用于稀疏帧选择、证据定位或跨模态对齐？",
+            "ViT 预训练、微调或蒸馏的成本与收益能否迁移到视频、音乐或其他长序列任务？"
+          ]
+        }
+      ],
+      "knownWorks": []
+    }
+  ],
+  "scoring": {
+    "weights": {
+      "relevance": 0.4,
+      "novelty": 0.25,
+      "evidence": 0.15,
+      "reproducibility": 0.1,
+      "timeliness": 0.1
+    },
+    "topN": 3,
+    "minTopScore": 60,
+    "maxPerDirectionInTop": 2,
+    "analysisBatchSize": 8,
+    "dailyAnalysisLimit": 10,
+    "maxAnalysisAttempts": 3,
+    "abstractChars": 1800
+  },
+  "budget": {
+    "dailyUsd": 0.2,
+    "weeklyUsd": 0.8,
+    "maxOutputTokens": 8000,
+    "maxRequestInputChars": 60000,
+    "thinkingMode": "disabled"
+  },
+  "modelPrices": {
+    "currency": "USD",
+    "unitTokens": 1000000,
+    "peakHoursUtc": [
+      [
+        1,
+        4
+      ],
+      [
+        6,
+        10
+      ]
+    ],
+    "peakWeekdaysOnly": true,
+    "holidays": [],
+    "models": {
+      "deepseek-flash": {
+        "offpeak": {
+          "cacheHit": 0.003,
+          "cacheMiss": 0.15,
+          "output": 0.6
+        },
+        "peak": {
+          "cacheHit": 0.006,
+          "cacheMiss": 0.3,
+          "output": 1.2
+        }
+      },
+      "deepseek-v4-pro": {
+        "offpeak": {
+          "cacheHit": 0.022,
+          "cacheMiss": 0.66,
+          "output": 1.98
+        },
+        "peak": {
+          "cacheHit": 0.044,
+          "cacheMiss": 1.32,
+          "output": 3.96
+        }
+      }
+    }
+  },
+  "github": {
+    "enabled": true,
+    "lookbackDays": 7,
+    "maxEventsPerRun": 20,
+    "maxInDaily": 3,
+    "repositories": [
+      {
+        "fullName": "OpenRLHF/OpenRLHF",
+        "purpose": "GRPO / PPO 训练框架与可复现实验",
+        "whyTracked": "关注强化学习训练框架的调度、稳定性和版本变更"
+      },
+      {
+        "fullName": "verl-project/verl",
+        "purpose": "强化学习训练系统",
+        "whyTracked": "关注 GRPO 实现、rollout 调度和训练效率"
+      },
+      {
+        "fullName": "huggingface/trl",
+        "purpose": "RLHF / GRPO 训练库",
+        "whyTracked": "对照不同 GRPO 实现与训练端点行为"
+      },
+      {
+        "fullName": "vllm-project/vllm",
+        "purpose": "LLM 推理系统",
+        "whyTracked": "关注 serving、KV cache、吞吐和延迟优化"
+      },
+      {
+        "fullName": "Dao-AILab/flash-attention",
+        "purpose": "高效注意力内核",
+        "whyTracked": "关注训练/推理底层内核和 GPU 利用率"
+      }
+    ]
+  },
+  "delivery": {
+    "topN": 3,
+    "includeGithub": true,
+    "maxGithubEvents": 3
+  }
+}

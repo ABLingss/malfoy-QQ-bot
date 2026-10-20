@@ -1,0 +1,211 @@
+{
+  "enabled": true,
+  "time": "07:30",
+  "timezone": "Asia/Shanghai",
+  "dataDir": "../data/arxiv-digest",
+  "target": {
+    "type": "private",
+    "userId": "YOUR_QQ_ID"
+  },
+  "maxPapers": 20,
+  "lookbackHours": 48,
+  "fallbackLookbackDays": 7,
+  "maxResultsPerCategory": 80,
+  "categories": [
+    "eess.AS",
+    "cs.SD",
+    "eess.SP",
+    "cs.MM",
+    "cs.LG",
+    "cs.CV",
+    "cs.CL",
+    "cs.DC",
+    "cs.PL",
+    "cs.AR",
+    "cs.SE",
+    "math.NA",
+    "physics.comp-ph"
+  ],
+  "audioCategories": [
+    "eess.AS",
+    "cs.SD",
+    "cs.MM"
+  ],
+  "audioTerms": [
+    "audio",
+    "speech",
+    "music",
+    "singing",
+    "voice",
+    "sound",
+    "acoustic",
+    "neural codec",
+    "audio codec",
+    "speech codec",
+    "vocoder",
+    "asr",
+    "tts",
+    "speaker",
+    "prosody",
+    "melody",
+    "waveform",
+    "spectrogram",
+    "speech enhancement",
+    "music information retrieval",
+    "mir"
+  ],
+  "excludeTerms": [
+    "sonar",
+    "underwater",
+    "seismic",
+    "radar",
+    "wireless",
+    "image coding",
+    "video coding",
+    "image compression",
+    "video compression",
+    "video question answering",
+    "video search",
+    "text-to-video"
+  ],
+  "keywordGroups": [
+    {
+      "label": "benchmark",
+      "weight": 2,
+      "terms": [
+        "benchmark",
+        "benchmarks",
+        "evaluation",
+        "leaderboard",
+        "metric",
+        "metrics"
+      ]
+    },
+    {
+      "label": "music generation",
+      "weight": 5,
+      "terms": [
+        "music generation",
+        "text-to-music",
+        "text to music",
+        "music synthesis",
+        "symbolic music generation"
+      ]
+    },
+    {
+      "label": "music understanding",
+      "weight": 4,
+      "terms": [
+        "music understanding",
+        "music tagging",
+        "music captioning",
+        "music information retrieval",
+        "mir"
+      ]
+    },
+    {
+      "label": "codec",
+      "weight": 4,
+      "terms": [
+        "codec",
+        "codecs",
+        "neural codec",
+        "audio codec",
+        "speech codec",
+        "tokenizer",
+        "tokenizers",
+        "rvq",
+        "residual vector quantization",
+        "vq"
+      ]
+    },
+    {
+      "label": "SVC",
+      "weight": 4,
+      "terms": [
+        "svc",
+        "singing voice conversion"
+      ]
+    },
+    {
+      "label": "VC",
+      "weight": 3,
+      "terms": [
+        "vc",
+        "voice conversion"
+      ]
+    },
+    {
+      "label": "JEV",
+      "weight": 3,
+      "terms": [
+        "jev"
+      ]
+    },
+    {
+      "label": "JEPA",
+      "weight": 4,
+      "terms": [
+        "jepa",
+        "joint embedding predictive architecture"
+      ]
+    },
+    {
+      "label": "ViT",
+      "weight": 2,
+      "terms": [
+        "vit",
+        "vision transformer",
+        "audio spectrogram transformer",
+        "ast"
+      ]
+    },
+    {
+      "label": "post-training",
+      "weight": 3,
+      "terms": [
+        "post-training",
+        "post training",
+        "posttraining",
+        "fine-tuning",
+        "finetuning",
+        "rlhf",
+        "dpo",
+        "instruction tuning",
+        "continual learning"
+      ]
+    },
+    {
+      "label": "efficient training/inference",
+      "weight": 3,
+      "terms": [
+        "efficient training",
+        "efficient inference",
+        "training efficiency",
+        "inference efficiency",
+        "inference latency",
+        "quantization",
+        "distillation",
+        "pruning",
+        "kv cache",
+        "speculative decoding",
+        "compression"
+      ]
+    }
+  ],
+  "model": "deepseek-flash",
+  "maxSummaryTokens": 450,
+  "lineageEnabled": true,
+  "lineageRefs": 2,
+  "openAlexEmail": "",
+  "runOnStartup": false,
+  "delivery": {
+    "briefInChat": true,
+    "saveMarkdown": true,
+    "sendMarkdownFile": true
+  },
+  "chunkSize": 4,
+  "maxConcurrentSummaries": 3,
+  "catchupMinutes": 90,
+  "maxDailyAttempts": 3
+}

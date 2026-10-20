@@ -1,0 +1,8 @@
+This repository contains original bot and research-agent code licensed under
+the MIT License. Third-party dependencies, Koishi, NapCatQQ, ChatLuna, QQNT,
+fonts, images and optional integrations remain under their own licenses and
+terms. No third-party persona artwork, subtitle corpus, or private research
+notes are included in the public repository.
+
+NapCatQQ is an unofficial QQ protocol implementation. Use it at your own risk
+and comply with QQ's terms and applicable law.

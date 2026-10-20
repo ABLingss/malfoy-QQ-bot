@@ -1,0 +1,115 @@
+plugins:
+  proxy-agent:zgw6d4: {}
+  group:server:
+    server:3o5vwb:
+      host: 127.0.0.1
+      port: 5140
+      maxPort: 5149
+  group:basic:
+    commands:zvolwr: {}
+    help:wkdew4: {}
+    http:l7nlyv: {}
+    locales:1gzjy6: {}
+  group:console:
+    config:69n9yz: {}
+    console:x0oghh:
+      open: false
+    logger:4fkw8e: {}
+    market:g9zvvf:
+      search:
+        endpoint: https://koishi-registry.yumetsuki.moe/index.json
+    sandbox:s72khj: {}
+    status:z7di7j: {}
+  group:storage:
+    database-sqlite:7fxnga:
+      path: data/koishi.db
+    assets-local:k08wuu: {}
+  group:research:
+    arxiv-digest:q7m2x9:
+      configFile: ../config/arxiv.json
+      ccfddlConfigFile: ../config/ccfddl.json
+      weeklyConfigFile: ../config/weekly.json
+  group:games:
+    puppeteer:04y5an:
+      executablePath: /usr/bin/chromium
+      args:
+        - '--no-sandbox'
+        - '--disable-dev-shm-usage'
+    wordle-game:ceyu3r:
+      enableDirectInput: false
+      isDarkThemeEnabled: false
+  group:bot:
+    bot-services:4xyo4r:
+      configFile: ../config/bot.json
+  group:adapter:
+    adapter-onebot:gs8kzr:
+      selfId: ${{ env.QQ_BOT_UIN }}
+      protocol: ws-reverse
+      path: /onebot
+      token: ${{ env.ONEBOT_TOKEN }}
+  group:chatluna:
+    chatluna:mu83c9:
+      botNames:
+        - 研究助理
+      isNickname: false
+      isNickNameWithContent: false
+      allowPrivate: true
+      allowAtReply: true
+      privateChatWithoutCommand: true
+      defaultModel: deepseek/deepseek-flash
+      defaultChatMode: plugin
+      defaultPreset: general
+      defaultEmbeddings: 无
+    chatluna-deepseek-adapter:z032jd:
+      apiKeys:
+        - - ${{ env.DEEPSEEK_API_KEY }}
+          - https://api.deepseek.com/v1
+          - true
+    chatluna-plugin-common:op19ig:
+      request: false
+      bilibili: false
+      group: false
+      command: true
+      commandWithSend: false
+      commandAutoExecute: true
+      commandBlacklist: []
+      commandList:
+        - command: 搜索
+          description: 使用 DeepSeek 搜索网页
+          selector:
+            - 搜索
+            - 搜一下
+            - 查一下
+          confirm: false
+        - command: 天气
+          description: 查询城市天气
+          selector:
+            - 天气
+            - 查天气
+            - weather
+          confirm: false
+        - command: 翻译
+          description: 翻译文本
+          selector:
+            - 翻译
+            - 译成
+            - translate
+          confirm: false
+        - command: 总结
+          description: 抓取网页并总结
+          selector:
+            - 总结
+            - 摘要
+            - 概括
+            - summarize
+          confirm: false
+        - command: 提醒
+          description: 创建到点提醒
+          selector:
+            - 提醒
+            - 记得
+            - remind
+          confirm: false
+      chat: false
+      todos: false
+      music: false

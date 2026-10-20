@@ -1,0 +1,44 @@
+# Secrets
+.env
+.env.*
+!.env.example
+koishi/.env
+koishi/.env.local
+
+# Personal push targets / optional email in research configs
+config/arxiv.json
+config/weekly.json
+config/bot.json
+config/research-profile.json
+koishi/koishi.yml
+
+# Runtime data / dependencies
+/data/
+/integrations/*
+!/integrations/README.md
+koishi/node_modules/
+koishi/.github/
+koishi/.yarn/
+systemd/*.service
+!systemd/*.service.example
+koishi/data/
+koishi/cache/
+koishi/temp/
+koishi/external/
+koishi/lib/
+koishi/dist/
+koishi/*.log
+
+# Backups may contain login state
+backup/
+knowledge/*
+!/knowledge/README.md
+assets/persona/*
+!/assets/persona/README.md
+*.tar.gz
+*.tar.zst
+
+# Editor / OS
+.DS_Store
+*.swp
+.vscode/

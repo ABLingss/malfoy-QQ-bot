@@ -1,0 +1,114 @@
+{
+  "enabled": true,
+  "source": "https://ccfddl.com/conference/initial.json",
+  "cacheFile": "../data/arxiv-digest/ccfddl-cache.json",
+  "lookaheadDays": 120,
+  "maxItems": 10,
+  "timezone": "Asia/Shanghai",
+  "chunkSize": 4,
+  "includeRanks": [
+    "A",
+    "B",
+    "C"
+  ],
+  "includeUnrankedForCoreFields": true,
+  "preferFieldPriority": true,
+  "excludeTitles": [
+    "NOSSDAV"
+  ],
+  "fields": [
+    {
+      "label": "系统/编译/体系结构",
+      "priority": 10,
+      "terms": [
+        "computer systems",
+        "operating systems",
+        "architecture",
+        "compilers",
+        "programming languages",
+        "parallel",
+        "distributed",
+        "high performance",
+        "supercomputing",
+        "software engineering",
+        "computer architecture",
+        "high-performance"
+      ]
+    },
+    {
+      "label": "音频/语音",
+      "priority": 8,
+      "terms": [
+        "acoustics",
+        "speech",
+        "spoken language",
+        "audio",
+        "voice"
+      ]
+    },
+    {
+      "label": "音乐",
+      "priority": 8,
+      "terms": [
+        "music",
+        "ismir"
+      ]
+    },
+    {
+      "label": "信号处理",
+      "priority": 9,
+      "terms": [
+        "signal processing",
+        "signal and information processing"
+      ]
+    },
+    {
+      "label": "多媒体",
+      "priority": 8,
+      "terms": [
+        "multimedia",
+        "multi-modal",
+        "multimodal"
+      ]
+    },
+    {
+      "label": "机器学习",
+      "priority": 9,
+      "terms": [
+        "machine learning",
+        "neural information processing",
+        "learning representations",
+        "artificial intelligence",
+        "learning theory"
+      ]
+    },
+    {
+      "label": "计算机视觉",
+      "priority": 4,
+      "terms": [
+        "computer vision",
+        "pattern recognition",
+        "image processing"
+      ]
+    },
+    {
+      "label": "自然语言处理",
+      "priority": 4,
+      "terms": [
+        "computational linguistics",
+        "natural language",
+        "language processing"
+      ]
+    },
+    {
+      "label": "数据挖掘/检索",
+      "priority": 3,
+      "terms": [
+        "data mining",
+        "information retrieval",
+        "knowledge discovery",
+        "web search"
+      ]
+    }
+  ]
+}

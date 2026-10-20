@@ -1,0 +1,41 @@
+{
+  "name": "koishi-qq-bot",
+  "version": "0.0.0",
+  "private": true,
+  "description": "QQ bot: NapCatQQ (OneBot 11) + Koishi + ChatLuna + DeepSeek",
+  "license": "MIT",
+  "scripts": {
+    "start": "koishi start"
+  },
+  "dependencies": {
+    "@koishijs/plugin-commands": "^3.5.4",
+    "@koishijs/plugin-config": "^2.8.6",
+    "@koishijs/plugin-console": "^5.30.4",
+    "@koishijs/plugin-database-sqlite": "^4.6.0",
+    "@koishijs/plugin-help": "^2.4.5",
+    "@koishijs/plugin-http": "^0.6.3",
+    "@koishijs/plugin-locales": "^2.5.3",
+    "@koishijs/plugin-logger": "^2.6.9",
+    "@koishijs/plugin-market": "^2.11.4",
+    "@koishijs/plugin-proxy-agent": "^0.3.3",
+    "@koishijs/plugin-sandbox": "^3.4.1",
+    "@koishijs/plugin-server": "^3.2.4",
+    "@koishijs/plugin-status": "^7.4.10",
+    "fast-xml-parser": "^5.11.2",
+    "koishi": "^4.18.11",
+    "koishi-plugin-adapter-onebot": "^6.9.5",
+    "koishi-plugin-arxiv-digest": "file:plugins/arxiv-digest",
+    "koishi-plugin-assets-local": "^3.3.2",
+    "koishi-plugin-bot-services": "file:plugins/bot-services",
+    "koishi-plugin-chatluna": "^1.4.3",
+    "koishi-plugin-chatluna-deepseek-adapter": "^1.4.1",
+    "koishi-plugin-chatluna-plugin-common": "^1.4.0",
+    "koishi-plugin-puppeteer": "^3.9.0",
+    "koishi-plugin-wordle-game": "^4.4.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ABLingss/malfoy-QQ-bot.git"
+  },
+  "homepage": "https://github.com/ABLingss/malfoy-QQ-bot#readme"
+}

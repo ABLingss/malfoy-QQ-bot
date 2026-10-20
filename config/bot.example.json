@@ -1,0 +1,37 @@
+{
+  "groupWhitelist": [],
+  "defaultCity": "成都",
+  "features": {
+    "search": true,
+    "weather": true,
+    "translate": true,
+    "summarize": true,
+    "remind": true,
+    "threeKingdom": false
+  },
+  "searchCount": 5,
+  "searchCacheSeconds": 600,
+  "searchPerUserPerMinute": 3,
+  "searchPerUserPerDay": 30,
+  "weatherPerUserPerMinute": 6,
+  "translateModel": "deepseek-flash",
+  "translatePerUserPerMinute": 5,
+  "translatePerUserPerDay": 100,
+  "summarizeModel": "deepseek-flash",
+  "summarizeMaxChars": 12000,
+  "summarizeCacheSeconds": 1800,
+  "summarizePerUserPerMinute": 3,
+  "summarizePerUserPerDay": 30,
+  "reminderFile": "../data/reminders.json",
+  "reminderMaxPending": 10,
+  "reminderPerUserPerDay": 10,
+  "timezone": "Asia/Shanghai",
+  "threeKingdomFile": "../integrations/ThreeKingdomMeme/knowledge_base/xinsanguo_corpus.json",
+  "persona": {
+    "name": "研究助理",
+    "addressUserAs": "你",
+    "imagesDir": "../assets/persona",
+    "maxImages": 3,
+    "intro": []
+  }
+}
