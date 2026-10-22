@@ -29,8 +29,10 @@
     "koishi-plugin-bot-services": "file:plugins/bot-services",
     "koishi-plugin-chatluna": "^1.4.3",
     "koishi-plugin-chatluna-deepseek-adapter": "^1.4.1",
+    "koishi-plugin-chatluna-multimodal-service": "^1.4.0",
     "koishi-plugin-chatluna-plugin-common": "^1.4.0",
     "koishi-plugin-puppeteer": "^3.9.0",
+    "koishi-plugin-tts-voice": "file:plugins/tts-voice",
     "koishi-plugin-wordle-game": "^4.4.0"
   },
   "repository": {
