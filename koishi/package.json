@@ -1,8 +1,8 @@
 {
   "name": "koishi-qq-bot",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": true,
-  "description": "QQ bot: NapCatQQ (OneBot 11) + Koishi + ChatLuna + DeepSeek",
+  "description": "QQ research assistant: NapCatQQ (OneBot 11) + Koishi + ChatLuna + OpenCode Go",
   "license": "MIT",
   "scripts": {
     "start": "koishi start"

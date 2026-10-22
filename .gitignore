@@ -39,8 +39,10 @@ assets/persona/*
 *.tar.gz
 *.tar.zst
 
-# Local agent instructions (not published)
+# Local agent instructions and private deployment notes (not published)
 AGENTS.md
+README.private.md
+*.private.md
 
 # Editor / OS
 .DS_Store
