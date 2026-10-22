@@ -3,8 +3,9 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/ABLingss/malfoy-QQ-bot"><img src="https://img.shields.io/badge/version-0.1.0-2f6b4e?style=flat-square" alt="version"></a>
+  <a href="https://github.com/ABLingss/malfoy-QQ-bot/releases"><img src="https://img.shields.io/github/v/release/ABLingss/malfoy-QQ-bot?style=flat-square&color=2f6b4e" alt="version"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-2f6b4e?style=flat-square" alt="license: MIT"></a>
+  <a href="https://github.com/ABLingss/malfoy-QQ-bot/actions/workflows/test.yml"><img src="https://github.com/ABLingss/malfoy-QQ-bot/actions/workflows/test.yml/badge.svg?branch=main" alt="CI"></a>
   <a href="https://koishi.chat"><img src="https://img.shields.io/badge/Koishi-4.18-2f6b4e?style=flat-square" alt="Koishi 4.18"></a>
   <img src="https://img.shields.io/badge/Node.js-24-2f6b4e?style=flat-square" alt="Node.js 24">
   <img src="https://img.shields.io/badge/QQ-NapCat-2f6b4e?style=flat-square" alt="QQ NapCat">
@@ -12,6 +13,10 @@
 </p>
 
 <h1 align="center">Malfoy QQ Bot</h1>
+
+<p align="center">
+  <b>简体中文</b> · <a href="README.en.md">English</a>
+</p>
 
 <p align="center">
   会读论文的斯莱特林大小姐。<br>
