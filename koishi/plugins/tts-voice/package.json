@@ -1,0 +1,13 @@
+{
+  "name": "koishi-plugin-tts-voice",
+  "version": "1.0.0",
+  "description": "Edge TTS voice replies for the QQ bot",
+  "main": "index.js",
+  "license": "MIT",
+  "peerDependencies": {
+    "koishi": "^4.18.0"
+  },
+  "dependencies": {
+    "msedge-tts": "^2.1.0"
+  }
+}

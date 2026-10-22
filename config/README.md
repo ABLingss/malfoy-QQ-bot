@@ -7,6 +7,7 @@
 cp config/arxiv.example.json config/arxiv.json
 cp config/weekly.example.json config/weekly.json
 cp config/bot.example.json config/bot.json
+cp config/tts.example.json config/tts.json
 cp config/research-profile.example.json config/research-profile.json
 ```
 
@@ -27,6 +28,7 @@ cp config/research-profile.example.json config/research-profile.json
 - `config/arxiv.json`
 - `config/weekly.json`
 - `config/bot.json`
+- `config/tts.json`
 - `config/research-profile.json`
 
 不要把真实 QQ 号、群号、API Key 或带个人信息的画像提交到公开仓库。

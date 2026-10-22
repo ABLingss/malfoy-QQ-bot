@@ -41,6 +41,8 @@ plugins:
   group:bot:
     bot-services:4xyo4r:
       configFile: ../config/bot.json
+    tts-voice:ttsv01:
+      configFile: ../config/tts.json
   group:adapter:
     adapter-onebot:gs8kzr:
       selfId: ${{ env.QQ_BOT_UIN }}

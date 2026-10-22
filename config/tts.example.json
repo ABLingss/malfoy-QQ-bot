@@ -1,0 +1,21 @@
+{
+  "enabled": true,
+  "voice": "zh-CN-XiaoyiNeural",
+  "rate": "-3%",
+  "pitch": "-6Hz",
+  "volume": "+0%",
+  "maxChars": 160,
+  "autoMaxChars": 120,
+  "minIntervalMs": 20000,
+  "retryDelayMs": 20000,
+  "retries": 2,
+  "timeoutMs": 30000,
+  "maxQueue": 6,
+  "cacheDir": "../data/tts-cache",
+  "cacheMaxFiles": 500,
+  "perUserPerMinute": 4,
+  "perUserPerDay": 80,
+  "groupWhitelist": [],
+  "readMode": true,
+  "answerMode": true
+}

@@ -10,6 +10,7 @@ config/arxiv.json
 config/weekly.json
 config/bot.json
 config/research-profile.json
+config/tts.json
 koishi/koishi.yml
 
 # Runtime data / dependencies

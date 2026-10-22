@@ -22,12 +22,13 @@ copy_if_missing() {
 copy_if_missing config/arxiv.example.json config/arxiv.json
 copy_if_missing config/weekly.example.json config/weekly.json
 copy_if_missing config/bot.example.json config/bot.json
+copy_if_missing config/tts.example.json config/tts.json
 copy_if_missing config/research-profile.example.json config/research-profile.json
 copy_if_missing koishi/koishi.example.yml koishi/koishi.yml
 copy_if_missing .env.example .env
 
 mkdir -p koishi/data/chathub/presets assets/persona knowledge/papers \
-  data/arxiv-digest data/research-agent
+  data/arxiv-digest data/research-agent data/tts-cache
 if [[ ! -f koishi/data/chathub/presets/general.yml ]]; then
   cp presets/general.example.yml koishi/data/chathub/presets/general.yml
   echo "create koishi/data/chathub/presets/general.yml"
