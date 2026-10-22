@@ -4,6 +4,20 @@
   "private": true,
   "description": "QQ research assistant: NapCatQQ (OneBot 11) + Koishi + ChatLuna + OpenCode Go",
   "license": "MIT",
+  "engines": {
+    "node": ">=24"
+  },
+  "keywords": [
+    "qq-bot",
+    "koishi",
+    "napcat",
+    "onebot",
+    "chatluna",
+    "arxiv",
+    "research-assistant",
+    "tts",
+    "llm"
+  ],
   "scripts": {
     "start": "koishi start"
   },
@@ -38,6 +52,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/ABLingss/malfoy-QQ-bot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ABLingss/malfoy-QQ-bot/issues"
   },
   "homepage": "https://github.com/ABLingss/malfoy-QQ-bot#readme"
 }
