@@ -39,6 +39,9 @@ assets/persona/*
 *.tar.gz
 *.tar.zst
 
+# Local agent instructions (not published)
+AGENTS.md
+
 # Editor / OS
 .DS_Store
 *.swp
