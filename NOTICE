@@ -1,13 +1,21 @@
 This repository contains original bot and research-agent code licensed under
-the MIT License. The original SVG artwork in assets/brand/ is also released
-under the MIT License. Third-party dependencies, Koishi, NapCatQQ, ChatLuna,
-QQNT, fonts, images and optional integrations remain under their own licenses
-and terms. No third-party persona artwork, subtitle corpus, or private research
-notes are included in the public repository.
+the MIT License. Earlier original SVG artwork in assets/brand/ (now retired)
+was also released under the MIT License.
+
+The current persona artwork (assets/malfoy.jpeg and the derived files
+assets/brand/malfoy-banner.jpg, malfoy-portrait.jpg, banner.png, icon.png and
+social-preview.png) was commissioned by the project owner. Copyright remains
+with the artist; it is used with permission and is NOT covered by the MIT
+License. Do not reuse the artwork without permission.
+
+Third-party dependencies, Koishi, NapCatQQ, ChatLuna, QQNT, fonts, images and
+optional integrations remain under their own licenses and terms. Private
+research notes, subtitle corpora and runtime persona assets are not included in
+the public repository.
 
 Character names and settings referenced by the optional persona preset belong
-to their respective rights holders. The bundled artwork is fan-made original
-illustration, not official material.
+to their respective rights holders. The bundled persona artwork is a fan-made
+commissioned illustration, not official material.
 
 NapCatQQ is an unofficial QQ protocol implementation. Use it at your own risk
 and comply with QQ's terms and applicable law.

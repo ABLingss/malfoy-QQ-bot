@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/brand/banner.svg" alt="Malfoy QQ Bot" width="100%">
+  <img src="assets/brand/banner.png" alt="Malfoy QQ Bot" width="100%">
 </p>
 
 <p align="center">
@@ -25,7 +25,7 @@
 </p>
 
 <p align="center">
-  <img src="assets/brand/malfoy-portrait.svg" alt="Malfoy persona portrait" width="260">
+  <img src="assets/brand/malfoy-portrait.jpg" alt="Hamster Malfoy persona portrait" width="260">
 </p>
 
 ---
@@ -160,7 +160,7 @@ NapCatQQ ──反向 WebSocket──> Koishi
 
 ```text
 .
-├── assets/brand/          # 原创 SVG 品牌资产（MIT）
+├── assets/brand/          # 品牌资产（人设图版权见目录内说明）
 ├── config/                # 示例配置与本地配置（本地配置已忽略）
 ├── docs/                  # 研究 Agent、周报、Wordle 文档
 ├── koishi/
@@ -201,6 +201,7 @@ NapCatQQ ──反向 WebSocket──> Koishi
 
 ## License
 
-原创代码与 `assets/brand/` 下的 SVG 资产使用 [MIT License](LICENSE)。
+原创代码使用 [MIT License](LICENSE)。`assets/brand/` 中的人设插画由项目所有者委托绘制，
+版权归画师所有，经授权使用，**不适用 MIT 许可**；旧版原创 SVG 已退役，历史提交中仍为 MIT。
 Koishi、NapCatQQ、ChatLuna、QQNT、第三方插件、角色名称与相关素材分别遵循其原始许可证和条款，
-详见 [NOTICE](NOTICE)。公开仓库不包含人设图片、知识库内容、真实研究画像或生产数据。
+详见 [NOTICE](NOTICE)。公开仓库不包含运行时人设图片、知识库内容、真实研究画像或生产数据。

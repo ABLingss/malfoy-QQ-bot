@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/brand/banner.svg" alt="Malfoy QQ Bot" width="100%">
+  <img src="assets/brand/banner.png" alt="Malfoy QQ Bot" width="100%">
 </p>
 
 <p align="center">
@@ -25,7 +25,7 @@
 </p>
 
 <p align="center">
-  <img src="assets/brand/malfoy-portrait.svg" alt="Malfoy persona portrait" width="260">
+  <img src="assets/brand/malfoy-portrait.jpg" alt="Hamster Malfoy persona portrait" width="260">
 </p>
 
 ---
@@ -161,7 +161,7 @@ NapCatQQ ──reverse WebSocket──> Koishi
 
 ```text
 .
-├── assets/brand/          # original SVG brand assets (MIT)
+├── assets/brand/          # brand assets (see license note inside)
 ├── config/                # example config and local config (local config is ignored)
 ├── docs/                  # research agent, weekly digest and Wordle docs
 ├── koishi/
@@ -202,7 +202,9 @@ NapCatQQ ──reverse WebSocket──> Koishi
 
 ## License
 
-Original code and the SVG assets under `assets/brand/` are released under the [MIT License](LICENSE).
-Koishi, NapCatQQ, ChatLuna, QQNT, third-party plugins, character names and related material remain
-under their own licenses and terms; see [NOTICE](NOTICE). The public repository does not include
-persona images, knowledge-base content, real research profiles or production data.
+Original code is released under the [MIT License](LICENSE). The persona artwork under `assets/brand/`
+was commissioned by the project owner; copyright remains with the artist and it is used with
+permission, **not under the MIT License**. The earlier original SVG assets are retired and remain MIT
+in git history. Koishi, NapCatQQ, ChatLuna, QQNT, third-party plugins, character names and related
+material remain under their own licenses and terms; see [NOTICE](NOTICE). The public repository does
+not include runtime persona images, knowledge-base content, real research profiles or production data.

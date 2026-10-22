@@ -1,29 +1,29 @@
 # Brand assets
 
-Original SVG artwork created for this project.
+Visual identity for the project. The master artwork is `../malfoy.jpeg` (2752×1536).
 
 | File | Use |
 | --- | --- |
-| `icon.svg` | Square project icon / avatar (256×256) |
-| `malfoy-portrait.svg` | Persona portrait used in the README (640×800) |
-| `banner.svg` | Repository hero banner (1280×400) |
-| `social-preview.svg` / `.png` | GitHub social preview card (1280×640) |
+| `malfoy-banner.jpg` | Hero crop used to render the banner (1200×800) |
+| `banner.png` | Repository hero banner (1280×400) |
+| `malfoy-portrait.jpg` | Persona portrait used in the README (1000×1250) |
+| `icon.png` | Square project icon / avatar (512×512) |
+| `social-preview.png` | GitHub social preview card (1280×640) |
 
 ## Usage
 
 Reference them from Markdown:
 
 ```markdown
-<img src="assets/brand/banner.svg" alt="Malfoy QQ Bot" width="100%">
+<img src="assets/brand/banner.png" alt="Malfoy QQ Bot" width="100%">
 ```
 
-They are plain SVG with no external fonts or images, so they render offline in
-browsers, GitHub and most Markdown viewers. The text in `banner.svg` uses system
-serif/sans-serif fallbacks.
+## Artwork credit and license
 
-## License
+The persona artwork (`../malfoy.jpeg` and the derived files above) was commissioned
+by the project owner. Copyright remains with the artist; it is used with permission
+and is **not** covered by the MIT License. Do not reuse the artwork without
+permission.
 
-These SVG files are original work and are released under the repository's
-[MIT License](../../LICENSE). Character names and the Harry Potter setting remain
-the property of their respective rights holders; these files are fan-made
-illustrations, not official artwork.
+The earlier SVG artwork (banner, portrait, icon and social preview) was original
+work released under the MIT License and is preserved in git history.
