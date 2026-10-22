@@ -2,7 +2,7 @@
   "enabled": true,
   "source": "https://ccfddl.com/conference/initial.json",
   "cacheFile": "../data/arxiv-digest/ccfddl-cache.json",
-  "lookaheadDays": 120,
+  "lookaheadDays": 180,
   "maxItems": 10,
   "timezone": "Asia/Shanghai",
   "chunkSize": 4,
@@ -14,49 +14,38 @@
   "includeUnrankedForCoreFields": true,
   "preferFieldPriority": true,
   "excludeTitles": [
-    "NOSSDAV"
+    "NOSSDAV",
+    "MLSys",
+    "BlockSys",
+    "WoWMoM"
   ],
   "fields": [
     {
-      "label": "系统/编译/体系结构",
-      "priority": 10,
-      "terms": [
-        "computer systems",
-        "operating systems",
-        "architecture",
-        "compilers",
-        "programming languages",
-        "parallel",
-        "distributed",
-        "high performance",
-        "supercomputing",
-        "software engineering",
-        "computer architecture",
-        "high-performance"
-      ]
-    },
-    {
       "label": "音频/语音",
-      "priority": 8,
+      "priority": 12,
       "terms": [
         "acoustics",
         "speech",
         "spoken language",
         "audio",
-        "voice"
+        "voice",
+        "sound"
       ]
     },
     {
       "label": "音乐",
-      "priority": 8,
+      "priority": 12,
       "terms": [
         "music",
-        "ismir"
+        "ismir",
+        "sound",
+        "song",
+        "singing"
       ]
     },
     {
       "label": "信号处理",
-      "priority": 9,
+      "priority": 10,
       "terms": [
         "signal processing",
         "signal and information processing"
@@ -64,7 +53,7 @@
     },
     {
       "label": "多媒体",
-      "priority": 8,
+      "priority": 11,
       "terms": [
         "multimedia",
         "multi-modal",
@@ -73,7 +62,7 @@
     },
     {
       "label": "机器学习",
-      "priority": 9,
+      "priority": 6,
       "terms": [
         "machine learning",
         "neural information processing",
