@@ -158,7 +158,58 @@ class ResearchService {
     for (const repo of (this.profile.github && this.profile.github.repositories) || []) {
       this.db.upsertRepository(repo)
     }
+    this.recomputeDirections()
     this.recomputeScores()
+  }
+
+  recomputeDirections() {
+    const rows = this.db.db
+      .prepare('SELECT id, title, abstract, published_at, raw_json, analysis_status FROM papers')
+      .all()
+    const update = this.db.db.prepare(
+      'UPDATE papers SET direction_tags_json = ?, primary_direction = ? WHERE id = ?',
+    )
+    let changed = 0
+    this.db.transaction(() => {
+      for (const row of rows) {
+        try {
+          let raw = {}
+          try {
+            raw = JSON.parse(row.raw_json || '{}')
+          } catch (error) {
+            raw = {}
+          }
+          const matches = matchDirections(
+            {
+              title: row.title,
+              abstract: row.abstract,
+              primaryCategory: raw.primaryCategory || '',
+              categories: raw.categories || [],
+            },
+            this.profile,
+          )
+          const tags = JSON.stringify(matches.map((match) => match.id))
+          const primary = matches[0] ? matches[0].id : null
+          if (row.analysis_status === 'completed' || row.analysis_status === 'legacy') {
+            update.run(tags, primary, row.id)
+          } else {
+            this.db.setPreliminaryScores(
+              row.id,
+              preliminaryScores(
+                { title: row.title, abstract: row.abstract, publishedAt: row.published_at },
+                this.profile,
+              ),
+            )
+            // setPreliminaryScores 使用 COALESCE 保留旧方向，这里强制写入最新匹配结果（包括清空）。
+            update.run(tags, primary, row.id)
+          }
+          changed += 1
+        } catch (error) {
+          this.logger.warn && this.logger.warn('重算论文方向失败 %s: %s', row.id, error.message)
+        }
+      }
+    })
+    return changed
   }
 
   recomputeScores() {
@@ -183,10 +234,12 @@ class ResearchService {
   }
 
   refreshProfile() {
+    const previousVersion = this.profile && this.profile.version
     this.profile = this.loadProfile()
     this.llm.profile = this.profile
     this.github.profile = this.profile
     this.github.config = this.profile.github || {}
+    if (previousVersion !== this.profile.version) this.recomputeDirections()
     this.recomputeScores()
     return this.profile
   }
@@ -240,7 +293,8 @@ class ResearchService {
     const maxWeight = Math.max(0.0001, ...directions.map((direction) => Number(direction.weight) || 0))
     const direction = this.directionMap().get(paper.primary_direction)
     const weight = direction ? Number(direction.weight) || 0 : 0
-    return base + (weight / maxWeight) * 10
+    const boost = Number(this.profile.scoring.directionBoost) || 10
+    return base + (weight / maxWeight) * boost
   }
 
   sortForUser(items) {
@@ -593,10 +647,13 @@ class ResearchService {
         paper.abstract &&
         paper.abstract.length >= 80,
     )
-    const backlogCandidates = this.db.papersForAnalysis({
-      limit: this.profile.scoring.dailyAnalysisLimit,
-      maxAttempts: this.profile.scoring.maxAnalysisAttempts || 3,
-    })
+    // 先取全量待分析队列，再按“方向权重 + 初筛分”排序，避免高权重方向被历史低权重论文挤掉名额。
+    const backlogCandidates = this.sortForUser(
+      this.db.papersForAnalysis({
+        limit: 2000,
+        maxAttempts: this.profile.scoring.maxAnalysisAttempts || 3,
+      }),
+    ).slice(0, this.profile.scoring.dailyAnalysisLimit)
     const analysisCandidates = this.sortForUser(
       uniqueById([...pooledAnalysisCandidates, ...backlogCandidates]),
     ).slice(0, this.profile.scoring.dailyAnalysisLimit)
@@ -807,10 +864,18 @@ class ResearchService {
   selectDiverse(papers, max, perDirection) {
     const result = []
     const counts = new Map()
+    const directions = this.profile.researchDirections || []
+    const maxWeight = Math.max(0.0001, ...directions.map((item) => Number(item.weight) || 0))
+    const capFor = (directionId) => {
+      const direction = this.directionMap().get(directionId)
+      const weight = direction ? Number(direction.weight) || 0 : 0
+      if (weight <= 0) return 1
+      return Math.max(1, Math.round((Number(perDirection) || 8) * Math.min(1, weight / maxWeight)))
+    }
     for (const paper of papers) {
       const direction = paper.primary_direction || 'other'
       const count = counts.get(direction) || 0
-      if (count >= perDirection) continue
+      if (count >= capFor(direction)) continue
       result.push(paper)
       counts.set(direction, count + 1)
       if (result.length >= max) break
@@ -947,7 +1012,7 @@ class ResearchService {
       `作者：${(paper.authors || []).slice(0, 4).join('、') || '未知'}`,
     ]
     if (paper.summary) lines.push('', `已有摘要：${paper.summary}`)
-    if (paper.abstract) lines.push('', `原文摘要：${truncate(paper.abstract, 700)}`)
+    if (paper.abstract) lines.push('', `原文摘要：${cleanText(paper.abstract)}`)
     lines.push('', `发送「研究.总结 ${paper.arxiv_id || paper.id} 深度」可请求结构化深度分析（会调用 DeepSeek）。`)
     return lines.join('\n')
   }
@@ -970,7 +1035,7 @@ class ResearchService {
       maxAttempts: 2,
     })
     const prefix = paper.summary
-      ? `${paper.title}\n已有历史摘要：${truncate(paper.summary, 500)}\n\n`
+      ? `${paper.title}\n已有历史摘要：${cleanText(paper.summary)}\n\n`
       : `${paper.title}\n\n`
     return {
       type: 'task',
@@ -1468,7 +1533,7 @@ class ResearchService {
         [
           `· ${paper.title}`,
           `  ${this.directionLabel(paper.primary_direction)} · ${paper.score_total == null ? '未评分' : Number(paper.score_total).toFixed(1)} · ${paper.analysis_status}`,
-          `  ${truncate(analysis && analysis.summary ? analysis.summary : paper.summary || paper.abstract, 160)}`,
+          `  ${cleanText(analysis && analysis.summary ? analysis.summary : paper.summary || paper.abstract)}`,
           `  ${paper.arxiv_id ? `arXiv:${paper.arxiv_id} → 研究.总结 ${paper.arxiv_id}` : `ID ${paper.id}`}`,
         ].join('\n'),
       )

@@ -1,6 +1,6 @@
 'use strict'
 
-const { cleanText, truncate, nowIso, parseVersionNumber, parseDate } = require('./text')
+const { cleanText, nowIso, parseVersionNumber, parseDate } = require('./text')
 
 const GITHUB_API = 'https://api.github.com'
 const IMPORTANT_TERMS = [
@@ -52,7 +52,7 @@ function releaseEvent(repo, release, { baseline = false } = {}) {
     title: `${repo.full_name} ${release.tag_name || release.name || 'release'}`,
     url: release.html_url,
     publishedAt: release.published_at || release.created_at,
-    summary: truncate(release.body || release.name || '', 700),
+    summary: cleanText(release.body || release.name || ''),
     importance,
     actionNeeded: importance === 'high' && /breaking|migration|deprecat|api change/i.test(release.body || ''),
     notifiedAt: baseline || importance === 'low' ? nowIso() : null,
@@ -80,10 +80,10 @@ function pullEvent(repo, pull, { baseline = false } = {}) {
   return {
     eventKey: `pull:${pull.id}:${pull.merged_at || pull.updated_at}`,
     eventType: 'pull_request',
-    title: `${repo.full_name} PR #${pull.number}: ${truncate(pull.title, 180)}`,
+    title: `${repo.full_name} PR #${pull.number}: ${cleanText(pull.title)}`,
     url: pull.html_url,
     publishedAt: pull.merged_at || pull.updated_at || pull.created_at,
-    summary: truncate(pull.body || '', 600),
+    summary: cleanText(pull.body || ''),
     importance,
     actionNeeded: false,
     notifiedAt: baseline || importance === 'low' ? nowIso() : null,
@@ -111,10 +111,10 @@ function issueEvent(repo, issue, { baseline = false } = {}) {
   return {
     eventKey: `issue:${issue.id}:${issue.updated_at}`,
     eventType: 'issue',
-    title: `${repo.full_name} Issue #${issue.number}: ${truncate(issue.title, 180)}`,
+    title: `${repo.full_name} Issue #${issue.number}: ${cleanText(issue.title)}`,
     url: issue.html_url,
     publishedAt: issue.updated_at || issue.created_at,
-    summary: truncate(issue.body || '', 600),
+    summary: cleanText(issue.body || ''),
     importance,
     actionNeeded: importance === 'high',
     notifiedAt: baseline || importance === 'low' ? nowIso() : null,
@@ -308,8 +308,8 @@ class GitHubMonitor {
     for (const event of rows) {
       const tag =
         event.importance === 'high' ? '重要' : event.event_type === 'release' ? 'Release' : event.event_type
-      lines.push(`· [${tag}] ${truncate(event.title, 120)}`)
-      if (event.summary) lines.push(`  ${truncate(event.summary, 220)}`)
+      lines.push(`· [${tag}] ${cleanText(event.title)}`)
+      if (event.summary) lines.push(`  ${cleanText(event.summary)}`)
       if (event.action_needed) lines.push('  可能需要检查接口/权重/数据格式兼容性')
       if (event.url) lines.push(`  ${event.url}`)
     }

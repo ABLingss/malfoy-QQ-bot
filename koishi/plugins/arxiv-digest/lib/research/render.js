@@ -1,7 +1,7 @@
 'use strict'
 
 const path = require('path')
-const { cleanText, truncate } = require('./text')
+const { cleanText } = require('./text')
 const { scoreBand } = require('./profile')
 
 const PROJECT_ROOT = process.env.QQ_BOT_ROOT || path.resolve(__dirname, '../../../../..')
@@ -54,12 +54,12 @@ function renderTop3Item(item, index) {
     `${directionLabel(paper)} · ${scoreText(paper)} · ${scoreBreakdown(paper.scores)}`,
     `为什么读：${cleanText(analysis.recommendation) || '摘要层面相关，建议先核验方法与实验。'}`,
   ]
-  if (analysis.core_contribution) lines.push(`核心贡献：${truncate(analysis.core_contribution, 320)}`)
+  if (analysis.core_contribution) lines.push(`核心贡献：${cleanText(analysis.core_contribution)}`)
   if (analysis.difference_from_prior) {
-    lines.push(`相对已有工作：${truncate(analysis.difference_from_prior, 300)}`)
+    lines.push(`相对已有工作：${cleanText(analysis.difference_from_prior)}`)
   }
-  if (analysis.evidence_boundary) lines.push(`证据边界：${truncate(analysis.evidence_boundary, 300)}`)
-  if (analysis.limitations) lines.push(`局限：${truncate(analysis.limitations, 240)}`)
+  if (analysis.evidence_boundary) lines.push(`证据边界：${cleanText(analysis.evidence_boundary)}`)
+  if (analysis.limitations) lines.push(`局限：${cleanText(analysis.limitations)}`)
   if ((analysis.related_projects || []).length) {
     lines.push(`与你相关：${analysis.related_projects.join('；')}`)
   }
@@ -80,7 +80,7 @@ function renderPaperLine(paper) {
   const lines = [
     `- ${paper.title}`,
     `  ${directionLabel(paper)} · ${scoreText(paper)}${paper.pushed_at ? ' · 已推送过' : ''}`,
-    `  ${truncate(summary, 180) || '暂无摘要'}`,
+    `  ${cleanText(summary) || '暂无摘要'}`,
   ]
   if (paper.arxiv_id) lines.push(`  https://arxiv.org/abs/${paper.arxiv_id}`)
   return lines.join('\n')
@@ -125,16 +125,16 @@ function renderCompare(left, right) {
     `   ${directionLabel(b)} · ${scoreText(b)}`,
     '',
     '核心贡献：',
-    `A: ${truncate(aa.core_contribution || aa.summary || '无分析', 300)}`,
-    `B: ${truncate(ab.core_contribution || ab.summary || '无分析', 300)}`,
+    `A: ${cleanText(aa.core_contribution || aa.summary || '无分析')}`,
+    `B: ${cleanText(ab.core_contribution || ab.summary || '无分析')}`,
     '',
     '证据边界：',
-    `A: ${truncate(aa.evidence_boundary || '无', 260)}`,
-    `B: ${truncate(ab.evidence_boundary || '无', 260)}`,
+    `A: ${cleanText(aa.evidence_boundary || '无')}`,
+    `B: ${cleanText(ab.evidence_boundary || '无')}`,
     '',
     '局限：',
-    `A: ${truncate(aa.limitations || '无', 240)}`,
-    `B: ${truncate(ab.limitations || '无', 240)}`,
+    `A: ${cleanText(aa.limitations || '无')}`,
+    `B: ${cleanText(ab.limitations || '无')}`,
     '',
     '与你的研究：',
     `A: ${(aa.related_projects || []).join('；') || '未分析'}`,

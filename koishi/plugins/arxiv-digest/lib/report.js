@@ -2,7 +2,7 @@
 
 const fs = require('fs')
 const path = require('path')
-const { buildDigest, clean } = require('./arxiv')
+const { buildDigest, clean, cleanText } = require('./arxiv')
 const { fetchWeather, getWeekInfo } = require('./weekly')
 const { buildCcfReminder } = require('./ccfddl')
 
@@ -131,15 +131,15 @@ function makeDailyBrief(report, options = {}) {
       const paper = item.paper || item
       const analysis = item.analysis || {}
       const reason = analysis.recommendation || analysis.summary || ''
-      lines.push(`${index + 1}. ${truncate(paper.title, 48)}`)
-      if (reason) lines.push(`   ${truncate(reason, 90)}`)
+      lines.push(`${index + 1}. ${cleanText(paper.title)}`)
+      if (reason) lines.push(`   ${cleanText(reason)}`)
     })
     lines.push(`📚 今日共 ${papers.length} 篇候选，详细分析见文件。`)
   } else if (papers.length) {
     lines.push(
       `📚 今日 ${papers.length} 篇：${papers
         .slice(0, options.maxPapers || 3)
-        .map((paper) => truncate(paper.title, 50))
+        .map((paper) => cleanText(paper.title))
         .join('；')}`,
     )
     lines.push('今日没有达到 Top 3 推荐标准的论文。')

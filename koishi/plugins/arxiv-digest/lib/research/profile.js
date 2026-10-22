@@ -91,24 +91,33 @@ function matchDirections(paper, profile) {
   )
   const matches = []
   for (const direction of profile.researchDirections || []) {
-    let score = 0
+    let keywordScore = 0
+    let categoryScore = 0
     let titleHits = 0
     let abstractHits = 0
     const matchedTerms = []
-    if ((direction.arxivCategories || []).some((category) => categories.has(category))) score += 6
+    if ((direction.arxivCategories || []).some((category) => categories.has(category))) categoryScore = 6
     for (const term of direction.keywords || []) {
       let hit = false
       if (termMatches(title, term)) {
-        score += 5
+        keywordScore += 5
         titleHits += 1
         hit = true
       } else if (termMatches(abstract, term)) {
-        score += 2
+        keywordScore += 2
         abstractHits += 1
         hit = true
       }
       if (hit) matchedTerms.push(term)
     }
+    // 配置了 requireKeywordMatch 的方向不能只靠 arXiv 分类命中，必须有实际关键词证据；
+    // minKeywordScore 用于过滤仅靠摘要里一个泛词蹭进来的论文。
+    const minKeywordScore = Math.max(
+      direction.requireKeywordMatch ? 1 : 0,
+      Number(direction.minKeywordScore) || 0,
+    )
+    if (keywordScore < minKeywordScore) continue
+    const score = keywordScore + categoryScore
     if (!score) continue
     matches.push({
       id: direction.id,
@@ -219,6 +228,7 @@ function profilePromptBlock(profile) {
       }
     }
   }
+  lines.push('推荐与打分时优先高权重方向；权重很低的方向只作背景覆盖，不要挤占主方向的名额，除非论文与用户当前项目直接相关。')
   lines.push('已知相关工作与实验条件（避免把用户已做过的工作当作新颖发现）：')
   for (const direction of profile.researchDirections || []) {
     const works = (direction.knownWorks || []).join('；')

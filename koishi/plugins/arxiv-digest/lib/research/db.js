@@ -761,7 +761,7 @@ class ResearchDatabase {
          ORDER BY COALESCE(relevance, 0) DESC, COALESCE(published_at, last_seen_at) DESC
          LIMIT ?`,
       )
-      .all(maxAttempts, Math.max(1, Math.min(50, limit)))
+      .all(maxAttempts, Math.max(1, Math.min(2000, limit)))
       .map(rowToPaper)
   }
 

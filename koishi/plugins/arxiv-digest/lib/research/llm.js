@@ -46,7 +46,7 @@ const ANALYSIS_SYSTEM_TEMPLATE = `你是严谨的计算机科学研究助理。�
 }
 
 评分均为 0-100 整数：
-- relevance：与研究者具体问题和已有工作的关系；仅关键词相似不得高分。
+- relevance：与研究者具体问题和已有工作的关系；仅关键词相似不得高分；高权重方向优先，低权重方向只在确有直接关联时给高分。
 - novelty：新问题、新机制或明确缺陷修复；摘要证据不足时不得高于 60。
 - evidence：基线、消融、真实负载、统计和复现细节；只有摘要时不得高于 65。
 - reproducibility：代码/数据/实现细节/成本可复现性。
@@ -148,19 +148,18 @@ function normalizeAnalysis(item, profile, paper, now = new Date()) {
   return {
     direction,
     directionTags: tags,
-    summary: truncate(item.summary, 800),
-    coreContribution: truncate(item.coreContribution, 1200),
-    differenceFromPrior: truncate(item.differenceFromPrior, 1200),
+    summary: cleanText(item.summary),
+    coreContribution: cleanText(item.coreContribution),
+    differenceFromPrior: cleanText(item.differenceFromPrior),
     evidenceBoundary:
-      truncate(item.evidenceBoundary, 1200) ||
+      cleanText(item.evidenceBoundary) ||
       '仅基于标题与摘要，未核验全文、实验设置和统计检验。',
-    limitations: truncate(item.limitations, 1000),
+    limitations: cleanText(item.limitations),
     relatedProjects: (Array.isArray(item.relatedProjects) ? item.relatedProjects : [])
-      .map((value) => truncate(value, 200))
-      .filter(Boolean)
-      .slice(0, 5),
-    recommendation: truncate(item.recommendation, 1200),
-    noveltyJudgment: truncate(item.noveltyJudgment, 1000),
+      .map(cleanText)
+      .filter(Boolean),
+    recommendation: cleanText(item.recommendation),
+    noveltyJudgment: cleanText(item.noveltyJudgment),
     noveltyPreliminary: true,
     scores: total,
     totalScore: total.total,
@@ -601,14 +600,14 @@ class DeepSeekResearchClient {
       .filter((item) => item && cleanText(item.question))
       .slice(0, 4)
       .map((item) => ({
-        question: truncate(item.question, 300),
-        whyItMatters: truncate(item.whyItMatters, 500),
+        question: cleanText(item.question),
+        whyItMatters: cleanText(item.whyItMatters),
         evidence: (Array.isArray(item.evidence) ? item.evidence : [])
           .map(cleanText)
           .filter((id) => evidenceIds.has(id)),
-        counterexample: truncate(item.counterexample, 500),
-        experiment: truncate(item.experiment, 500),
-        uncertainty: truncate(item.uncertainty, 500),
+        counterexample: cleanText(item.counterexample),
+        experiment: cleanText(item.experiment),
+        uncertainty: cleanText(item.uncertainty),
       }))
       .filter((item) => item.evidence.length > 0)
     return { questions, api: result }

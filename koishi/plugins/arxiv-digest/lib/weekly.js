@@ -11,6 +11,7 @@ const {
   formatDateParts,
   loadJson,
   clean,
+  cleanText,
 } = require('./arxiv')
 const { buildCcfSection } = require('./ccfddl')
 
@@ -266,8 +267,8 @@ async function buildWeeklyArxiv(weeklyCfg, arxivCfg, state, now, digestDir) {
   const blocks = sorted.slice(0, maxPapers).map((paper, index) => {
     const tags = (paper.matchedGroups || []).length ? ` · ${paper.matchedGroups.join('、')}` : ''
     return [
-      `${index + 1}. ${clean(paper.title, 180)}${tags}`,
-      clean(paper.summaryText || paper.summary, 300),
+      `${index + 1}. ${cleanText(paper.title)}${tags}`,
+      cleanText(paper.summaryText || paper.summary),
       paper.url || `https://arxiv.org/abs/${paper.id}`,
     ].join('\n')
   })
