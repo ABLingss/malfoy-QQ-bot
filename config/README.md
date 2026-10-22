@@ -15,6 +15,7 @@ cp config/research-profile.example.json config/research-profile.json
 
 - `arxiv.json` / `weekly.json` 的 `target.userId`
 - `bot.json` 的 `groupWhitelist`（可为空）
+- 需要身份彩蛋时，参考 `config/persona/malfoy.example.json`，把 `persona` 字段合并到 `bot.json`
 - `research-profile.json` 的方向、项目问题和权重
 - 需要时修改 `ccfddl.json` 的会议领域优先级
 
