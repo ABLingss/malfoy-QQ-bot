@@ -286,12 +286,18 @@ class LlmError extends Error {
 }
 
 class DeepSeekResearchClient {
-  constructor({ profile, db, logger, fetchImpl, apiKey }) {
+  constructor({ profile, db, logger, fetchImpl, apiKey, baseUrl, sessionId }) {
     this.profile = profile
     this.db = db
     this.logger = logger || console
     this.fetchImpl = fetchImpl || globalThis.fetch
-    this.apiKey = apiKey || process.env.DEEPSEEK_API_KEY || ''
+    this.apiKey = apiKey || process.env.OPENCODE_API_KEY || ''
+    this.baseUrl = (
+      baseUrl ||
+      process.env.OPENCODE_BASE_URL ||
+      'https://opencode.ai/inference/go/v1'
+    ).replace(/\/+$/, '')
+    this.sessionId = sessionId || process.env.OPENCODE_SESSION || 'qq-bot'
   }
 
   model() {
@@ -344,7 +350,7 @@ class DeepSeekResearchClient {
   }
 
   async callJson({ system, user, requestType, taskId, maxTokens, temperature = 0.1 }) {
-    if (!this.apiKey) throw new LlmError('DEEPSEEK_API_KEY 未配置', 'auth')
+    if (!this.apiKey) throw new LlmError('OPENCODE_API_KEY 未配置', 'auth')
     const inputChars = system.length + user.length
     if (inputChars > this.profile.budget.maxRequestInputChars) {
       throw new LlmError(`单次请求输入过长（${inputChars} 字符），请缩小批次`, 'input_too_large')
@@ -359,11 +365,20 @@ class DeepSeekResearchClient {
       const controller = new AbortController()
       const timer = setTimeout(() => controller.abort(), this.profile.budget.timeoutMs || 90000)
       try {
-        const response = await this.fetchImpl('https://api.deepseek.com/v1/chat/completions', {
+        const session = [
+          this.sessionId,
+          requestType || 'research',
+          taskId || 'batch',
+        ]
+          .map((part) => String(part).slice(0, 80))
+          .join(':')
+        const response = await this.fetchImpl(`${this.baseUrl}/chat/completions`, {
           method: 'POST',
           headers: {
             Authorization: `Bearer ${this.apiKey}`,
             'Content-Type': 'application/json',
+            'x-opencode-session': session,
+            'User-Agent': 'qq-bot/1.0',
           },
           body: JSON.stringify({
             model,

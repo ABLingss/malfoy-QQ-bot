@@ -56,14 +56,14 @@ plugins:
       allowPrivate: true
       allowAtReply: true
       privateChatWithoutCommand: true
-      defaultModel: deepseek/deepseek-flash
+      defaultModel: deepseek/deepseek-v4.1-flash
       defaultChatMode: plugin
       defaultPreset: general
       defaultEmbeddings: 无
     chatluna-deepseek-adapter:z032jd:
       apiKeys:
-        - - ${{ env.DEEPSEEK_API_KEY }}
-          - https://api.deepseek.com/v1
+        - - ${{ env.OPENCODE_API_KEY }}
+          - ${{ env.OPENCODE_BASE_URL }}
           - true
     chatluna-plugin-common:op19ig:
       request: false

@@ -8,6 +8,12 @@ const { XMLParser } = require('fast-xml-parser')
 
 const ARXIV_API = 'https://export.arxiv.org/api/query'
 const OPENALEX_API = 'https://api.openalex.org'
+const OPENCODE_DEFAULT_BASE_URL = 'https://opencode.ai/inference/go/v1'
+
+function opencodeChatUrl() {
+  const base = (process.env.OPENCODE_BASE_URL || OPENCODE_DEFAULT_BASE_URL).replace(/\/+$/, '')
+  return `${base}/chat/completions`
+}
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms))
@@ -352,8 +358,8 @@ function selectPapers(papers, cfg) {
 }
 
 async function deepseekChat(messages, cfg, options = {}) {
-  const key = process.env.DEEPSEEK_API_KEY
-  if (!key) throw new Error('DEEPSEEK_API_KEY 未配置')
+  const key = process.env.OPENCODE_API_KEY
+  if (!key) throw new Error('OPENCODE_API_KEY 未配置')
   const payload = {
     model: options.model || cfg.model || 'deepseek-flash',
     messages,
@@ -362,11 +368,13 @@ async function deepseekChat(messages, cfg, options = {}) {
     thinking: { type: 'disabled' },
   }
   const started = Date.now()
-  const response = await fetchWithRetry('https://api.deepseek.com/v1/chat/completions', {
+  const response = await fetchWithRetry(opencodeChatUrl(), {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${key}`,
       'Content-Type': 'application/json',
+      'x-opencode-session': `${process.env.OPENCODE_SESSION || 'qq-bot'}:arxiv`,
+      'User-Agent': 'qq-bot/1.0',
     },
     body: JSON.stringify(payload),
     timeout: 60000,

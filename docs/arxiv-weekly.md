@@ -145,8 +145,8 @@ SaaS，也不会把 QQ 号、API Key 或聊天内容发送到额外服务。
 - **arXiv**：优先使用 `https://rss.arxiv.org/rss/<category>`，RSS 是缓存
   友好的每日公告；RSS 为空或失败时才回退到
   `https://export.arxiv.org/api/query`。API 有 429 限流，因此不作为首选。
-- **DeepSeek**：`deepseek-flash`，通过 `DEEPSEEK_API_KEY` 调用
-  `/v1/chat/completions`，用于中文摘要和 `脉络` 总结。
+- **OpenCode Go / DeepSeek**：`deepseek-flash`，通过 `OPENCODE_API_KEY`
+  调用 OpenCode Go 的 `/v1/chat/completions`，用于中文摘要和 `脉络` 总结。
 - **OpenAlex**：`https://api.openalex.org`，按 arXiv DOI 查
   `referenced_works` / `related_works`，再批量取标题、年份、引用数。
   新论文可能尚未被 OpenAlex 收录，此时显示 `脉络：暂无`。
@@ -215,10 +215,10 @@ node --check koishi/plugins/arxiv-digest/lib/arxiv.js
 node --check koishi/plugins/arxiv-digest/lib/ccfddl.js
 node --check koishi/plugins/arxiv-digest/lib/weekly.js
 
-# 小规模 dry-run，不发 QQ；需要 .env 里的 DeepSeek Key
+# 小规模 dry-run，不发 QQ；需要 .env 里的 OpenCode Go Key
 set -a; . <PROJECT_ROOT>/.env; set +a
 node <PROJECT_ROOT>/scripts/arxiv-dry-run.js --papers 3 --weekly
-unset DEEPSEEK_API_KEY
+unset OPENCODE_API_KEY
 
 # 服务日志
 journalctl -u koishi.service -n 100 --no-pager | grep -Ei 'arxiv|ccf|weekly|error'

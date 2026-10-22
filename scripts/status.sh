@@ -25,12 +25,31 @@ curl -s -o /dev/null -w 'http://127.0.0.1:5140/ -> HTTP %{http_code}\n' --max-ti
 
 echo
 echo "== credentials present (values never printed) =="
-awk -F= '/^(DEEPSEEK_API_KEY|QQ_BOT_UIN|ONEBOT_TOKEN)=/{
+awk -F= '/^(OPENCODE_API_KEY|DEEPSEEK_API_KEY|QQ_BOT_UIN|ONEBOT_TOKEN)=/{
   print $1 "=" (length($2) > 0 ? "SET" : "EMPTY")
 }' "$ENV_FILE" 2>/dev/null || echo "cannot read $ENV_FILE"
 
 echo
-echo "== DeepSeek API reachability =="
+echo "== OpenCode Go API reachability =="
+OKEY=$(awk -F= '/^OPENCODE_API_KEY=/{print substr($0, index($0, "=") + 1)}' "$ENV_FILE" 2>/dev/null)
+if [[ -z "${OKEY:-}" ]]; then
+  echo "OPENCODE_API_KEY is empty; skip API test"
+else
+  code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 20 \
+    -H "Authorization: Bearer $OKEY" https://opencode.ai/inference/go/v1/models) || code=000
+  case "$code" in
+    200) echo "OpenCode Go /v1/models -> HTTP 200 (auth OK)" ;;
+    401) echo "OpenCode Go /v1/models -> HTTP 401 (invalid key or auth failure)" ;;
+    403) echo "OpenCode Go /v1/models -> HTTP 403 (no Go subscription?)" ;;
+    429) echo "OpenCode Go /v1/models -> HTTP 429 (rate limited)" ;;
+    000) echo "OpenCode Go /v1/models -> network failure" ;;
+    *)   echo "OpenCode Go /v1/models -> HTTP $code" ;;
+  esac
+fi
+unset OKEY
+
+echo
+echo "== DeepSeek API reachability (web search/fetch only) =="
 KEY=$(awk -F= '/^DEEPSEEK_API_KEY=/{print substr($0, index($0, "=") + 1)}' "$ENV_FILE" 2>/dev/null)
 if [[ -z "${KEY:-}" ]]; then
   echo "DEEPSEEK_API_KEY is empty; skip API test"

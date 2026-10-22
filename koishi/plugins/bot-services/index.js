@@ -52,6 +52,85 @@ const DEFAULTS = {
   },
 }
 
+const OPENCODE_DEFAULT_BASE_URL = 'https://opencode.ai/inference/go/v1'
+
+function opencodeEndpoint(pathname) {
+  const base = (process.env.OPENCODE_BASE_URL || OPENCODE_DEFAULT_BASE_URL).replace(/\/+$/, '')
+  return `${base}/${String(pathname).replace(/^\/+/, '')}`
+}
+
+function opencodeCredentials() {
+  const key = process.env.OPENCODE_API_KEY
+  if (!key) throw new Error('OPENCODE_API_KEY 未配置')
+  return {
+    key,
+    session: process.env.OPENCODE_SESSION || 'qq-bot',
+  }
+}
+
+let opencodeHeaderShimInstalled = false
+
+// ChatLuna builds its own requests, so adapt them here instead of patching
+// node_modules: add the Go session header for caching, and disable thinking
+// for deepseek-v4.1 chat calls (the adapter only knows the `deepseek-v4-`
+// naming, so the synthetic `-instant` model is not registered).
+function installOpenCodeHeaderShim(logger) {
+  if (opencodeHeaderShimInstalled) return true
+  let ChatLunaPlugin
+  try {
+    ;({ ChatLunaPlugin } = require('koishi-plugin-chatluna/services/chat'))
+  } catch (error) {
+    if (logger) logger.warn('ChatLuna 请求注入未启用：%s', error.message)
+    return false
+  }
+  if (!ChatLunaPlugin || typeof ChatLunaPlugin.prototype.fetch !== 'function') {
+    if (logger) logger.warn('ChatLuna 请求注入未启用：ChatLunaPlugin.fetch 不存在')
+    return false
+  }
+  const originalFetch = ChatLunaPlugin.prototype.fetch
+  ChatLunaPlugin.prototype.fetch = function opencodeFetch(info, init, proxy) {
+    const url = typeof info === 'string' ? info : info && info.url ? String(info.url) : ''
+    if (!url.includes('opencode.ai/')) return originalFetch.call(this, info, init, proxy)
+
+    const headers = new Headers((init && init.headers) || undefined)
+    let body = null
+    if (init && typeof init.body === 'string') {
+      try {
+        body = JSON.parse(init.body)
+      } catch {
+        // Non-JSON bodies (for example model listing) keep the static session.
+      }
+    }
+    let nextInit = init
+    if (body && typeof body === 'object') {
+      let bodyChanged = false
+      if (
+        body.thinking == null &&
+        typeof body.model === 'string' &&
+        /^deepseek-v4\./.test(body.model)
+      ) {
+        body.thinking = { type: 'disabled' }
+        delete body.reasoning_effort
+        bodyChanged = true
+      }
+      if (!headers.has('x-opencode-session')) {
+        let session = process.env.OPENCODE_SESSION || 'qq-bot-chatluna'
+        const conversation = body.prompt_cache_key || body.user
+        if (conversation) session = `${session}:${String(conversation).slice(0, 80)}`
+        headers.set('x-opencode-session', session)
+      }
+      if (bodyChanged) nextInit = { ...(init || {}), body: JSON.stringify(body) }
+    } else if (!headers.has('x-opencode-session')) {
+      headers.set('x-opencode-session', process.env.OPENCODE_SESSION || 'qq-bot-chatluna')
+    }
+    if (!headers.has('user-agent')) headers.set('user-agent', 'qq-bot/1.0')
+    return originalFetch.call(this, info, { ...(nextInit || {}), headers }, proxy)
+  }
+  opencodeHeaderShimInstalled = true
+  if (logger) logger.info('ChatLuna 请求注入已启用（会话头 + deepseek-v4.1 非思考）')
+  return true
+}
+
 const WEATHER_TEXT = {
   0: '晴',
   1: '大部晴朗',
@@ -374,10 +453,13 @@ exports._test = {
   searchThreeKingdom,
   formatThreeKingdom,
   fillThreeKingdomTopic,
+  installOpenCodeHeaderShim,
+  opencodeEndpoint,
 }
 
 exports.apply = function apply(ctx, config) {
   const logger = ctx.logger('bot-services')
+  installOpenCodeHeaderShim(logger)
   const configFile = config.configFile || path.join(PROJECT_ROOT, 'config', 'bot.json')
   let cached = null
   let cachedMtime = -1
@@ -627,16 +709,17 @@ exports.apply = function apply(ctx, config) {
   }
 
   async function deepseekChat(messages, cfg, options = {}) {
-    const key = process.env.DEEPSEEK_API_KEY
-    if (!key) throw new Error('DEEPSEEK_API_KEY 未配置')
+    const { key, session } = opencodeCredentials()
     const controller = new AbortController()
     const timer = setTimeout(() => controller.abort(), 60000)
     try {
-      const response = await fetch('https://api.deepseek.com/v1/chat/completions', {
+      const response = await fetch(opencodeEndpoint('chat/completions'), {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${key}`,
           'Content-Type': 'application/json',
+          'x-opencode-session': `${session}:bot-services`,
+          'User-Agent': 'qq-bot/1.0',
         },
         body: JSON.stringify({
           model: options.model || cfg.translateModel || 'deepseek-flash',
@@ -652,14 +735,14 @@ exports.apply = function apply(ctx, config) {
       try {
         data = JSON.parse(raw)
       } catch {
-        throw new Error('DeepSeek 返回格式异常')
+        throw new Error('OpenCode Go 返回格式异常')
       }
       const message = data.choices && data.choices[0] && data.choices[0].message
       const content = message && (message.content || message.reasoning_content)
       if (!content) throw new Error('模型没有返回内容')
       return String(content).trim()
     } catch (error) {
-      if (error.name === 'AbortError') throw new Error('DeepSeek 请求超时')
+      if (error.name === 'AbortError') throw new Error('OpenCode Go 请求超时')
       throw error
     } finally {
       clearTimeout(timer)
