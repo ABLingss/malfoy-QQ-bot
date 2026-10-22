@@ -115,3 +115,5 @@ plugins:
       chat: false
       todos: false
       music: false
+    chatluna-multimodal-service:mm5t1x:
+      enableContextGifHandling: true
