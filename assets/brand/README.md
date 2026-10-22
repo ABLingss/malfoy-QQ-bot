@@ -7,6 +7,7 @@ Original SVG artwork created for this project.
 | `icon.svg` | Square project icon / avatar (256×256) |
 | `malfoy-portrait.svg` | Persona portrait used in the README (640×800) |
 | `banner.svg` | Repository hero banner (1280×400) |
+| `social-preview.svg` / `.png` | GitHub social preview card (1280×640) |
 
 ## Usage
 
